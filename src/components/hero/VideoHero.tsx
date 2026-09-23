@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 interface VideoHeroProps {
   children?: React.ReactNode;
@@ -27,7 +28,7 @@ export const VideoHero: React.FC<VideoHeroProps> = ({ children }) => {
       {/* Background Video Animation / Fallback */}
       {videoError ? (
         <img
-          src="/assets/hero-frames/ezgif-frame-001.jpg"
+          src={getAssetUrl('/assets/hero-frames/ezgif-frame-001.jpg')}
           alt="QeQ STUDIO Atelier"
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         />
@@ -39,14 +40,14 @@ export const VideoHero: React.FC<VideoHeroProps> = ({ children }) => {
           loop
           playsInline
           preload="auto"
-          poster="/assets/hero-frames/ezgif-frame-001.jpg"
+          poster={getAssetUrl('/assets/hero-frames/ezgif-frame-001.jpg')}
           onError={() => setVideoError(true)}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         >
-          <source src="/assets/hero animation.mp4" type="video/mp4" />
-          <source src="/assets/animation/Camera_zooming_on_nail_art_20260922170206.mp4" type="video/mp4" />
+          <source src={getAssetUrl('/assets/hero animation.mp4')} type="video/mp4" />
+          <source src={getAssetUrl('/assets/animation/Camera_zooming_on_nail_art_20260922170206.mp4')} type="video/mp4" />
           <img
-            src="/assets/hero-frames/ezgif-frame-001.jpg"
+            src={getAssetUrl('/assets/hero-frames/ezgif-frame-001.jpg')}
             alt="QeQ STUDIO Atelier"
             className="absolute inset-0 w-full h-full object-cover"
           />

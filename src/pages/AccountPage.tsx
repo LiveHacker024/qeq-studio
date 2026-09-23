@@ -15,6 +15,7 @@ import {
   CheckCircle2,
   Package
 } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetUrl';
 
 export const AccountPage: React.FC<{ onNavigateShop: () => void; onProductClick: (slug: string) => void }> = ({
   onNavigateShop,
@@ -139,7 +140,7 @@ export const AccountPage: React.FC<{ onNavigateShop: () => void; onProductClick:
                   {order.items.map((item, i: number) => (
                     <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-black/40 border border-white/5">
                       <img
-                        src={item.productImage}
+                        src={getAssetUrl(item.productImage)}
                         alt={item.productName}
                         className="w-12 h-14 rounded-lg object-cover bg-black border border-white/10 shrink-0"
                       />
@@ -195,7 +196,7 @@ export const AccountPage: React.FC<{ onNavigateShop: () => void; onProductClick:
                     onClick={() => onProductClick(p.slug)}
                     className="aspect-[4/5] rounded-xl overflow-hidden cursor-pointer"
                   >
-                    <img src={p.thumbnail} alt={p.name} className="w-full h-full object-cover hover:scale-105 transition-transform" />
+                    <img src={getAssetUrl(p.thumbnail)} alt={p.name} className="w-full h-full object-cover hover:scale-105 transition-transform" />
                   </div>
                   <div>
                     <h4 className="font-editorial text-xs font-bold text-white truncate">{p.name}</h4>

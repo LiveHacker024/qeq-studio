@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Product } from '../../types';
 import { Maximize2, X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 interface ProductGalleryProps {
   product: Product;
 }
 
 export const ProductGallery: React.FC<ProductGalleryProps> = ({ product }) => {
-  const images = product.images.length > 0 ? product.images : [product.thumbnail];
+  const rawImages = product.images.length > 0 ? product.images : [product.thumbnail];
+  const images = rawImages.map(img => getAssetUrl(img));
   const [selectedIdx, setSelectedIdx] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);

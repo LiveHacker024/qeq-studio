@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sparkles, ArrowUpRight, Gem, Layers, Star } from 'lucide-react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 interface FeaturedCollectionsProps {
   onNavigate: (path: string) => void;
@@ -17,7 +18,7 @@ export const FeaturedCollections: React.FC<FeaturedCollectionsProps> = ({
       title: 'NORMAL COLLECTION',
       subtitle: '3 Packs × 24 Nails (72 Nails Total)',
       desc: 'Handmade press-on nails for everyday wear across 3 individual packs.',
-      image: '/assets/products/normal/JHB005.jpg',
+      image: getAssetUrl('/assets/products/normal/JHB005.jpg'),
       badge: `₹${normalPrice} (72 Nails)`,
       badgeColor: 'bg-blue-600/30 text-blue-200 border-blue-500/40',
       path: '/shop/normal',
@@ -28,7 +29,7 @@ export const FeaturedCollections: React.FC<FeaturedCollectionsProps> = ({
       title: 'PREMIUM COLLECTION',
       subtitle: '1 Premium Pack (10 Handmade Nails)',
       desc: 'Handcrafted premium press-on nails with 3D embellished accents.',
-      image: '/assets/products/premium/1.jpg',
+      image: getAssetUrl('/assets/products/premium/1.jpg'),
       badge: `₹${premiumPrice} (10 Nails)`,
       badgeColor: 'bg-champagne-gold/20 text-champagne-soft border-champagne-gold/40',
       path: '/shop/premium',
@@ -39,7 +40,7 @@ export const FeaturedCollections: React.FC<FeaturedCollectionsProps> = ({
       title: 'COMPLETE CATALOG',
       subtitle: '124 Handmade Designs',
       desc: 'Explore the full collection of 80 Normal and 44 Premium handcrafted styles.',
-      image: '/assets/products/normal/JHB001.jpg',
+      image: getAssetUrl('/assets/products/normal/JHB001.jpg'),
       badge: '124 Styles',
       badgeColor: 'bg-white/10 text-white border-white/20',
       path: '/shop',
@@ -50,7 +51,7 @@ export const FeaturedCollections: React.FC<FeaturedCollectionsProps> = ({
       title: 'COLLECTIONS HUB',
       subtitle: 'Curated Categories',
       desc: 'Browse designs categorized by collection tier and aesthetic.',
-      image: '/assets/products/premium/31-1.jpg',
+      image: getAssetUrl('/assets/products/premium/31-1.jpg'),
       badge: 'Atelier',
       badgeColor: 'bg-purple-600/30 text-purple-200 border-purple-500/40',
       path: '/collections',

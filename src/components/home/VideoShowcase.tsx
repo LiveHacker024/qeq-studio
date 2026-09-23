@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Play, Pause, RotateCw, ZoomIn, Sparkles, Layers, Eye } from 'lucide-react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 export const VideoShowcase: React.FC = () => {
   const [activeVideoIdx, setActiveVideoIdx] = useState(0);
@@ -10,28 +11,28 @@ export const VideoShowcase: React.FC = () => {
     {
       title: '360° Studio Turntable',
       subtitle: 'Continuous Multi-Angle Inspection',
-      src: '/assets/animation/nail-360-turntable.mp4',
+      src: getAssetUrl('/assets/animation/nail-360-turntable.mp4'),
       icon: RotateCw,
       desc: 'Inspect apex curve, side taper, and crystal setting from every perspective.'
     },
     {
       title: 'Macro Optical Zoom',
       subtitle: 'Crystal Facet & Gel Purity',
-      src: '/assets/animation/nail-macro-zoom.mp4',
+      src: getAssetUrl('/assets/animation/nail-macro-zoom.mp4'),
       icon: ZoomIn,
       desc: 'Precision inspection of mirror chrome finishes and Austrian crystal facets.'
     },
     {
       title: 'Hand Transformation',
       subtitle: 'Instant 10-Minute Salon Fit',
-      src: '/assets/animation/nail-hand-transform.mp4',
+      src: getAssetUrl('/assets/animation/nail-hand-transform.mp4'),
       icon: Sparkles,
       desc: 'See natural nails transform into high-fashion salon masterpieces.'
     },
     {
       title: 'Exploded Component Assembly',
       subtitle: 'Anatomical Precision Engineering',
-      src: '/assets/animation/nail-exploded-view.mp4',
+      src: getAssetUrl('/assets/animation/nail-exploded-view.mp4'),
       icon: Layers,
       desc: 'Dynamic separation and re-assembly of multi-tier gel polymer layers.'
     }

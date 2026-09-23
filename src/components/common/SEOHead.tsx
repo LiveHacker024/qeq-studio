@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Product } from '../../types';
 import { BUSINESS_INFO } from '../../data/initialConfig';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 interface SEOHeadProps {
   title?: string;
@@ -14,9 +15,11 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
   title = 'QeQ STUDIO | Luxury Handmade Press-On Nails',
   description = 'Handmade press-on nails by QeQ STUDIO. Normal Collection (3 Packs × 24 Nails = 72 Nails Total at ₹249) and Premium Collection (1 Premium Pack = 10 Nails at ₹299).',
   canonicalUrl = window.location.href,
-  image = '/assets/logo/logo-3d.png',
+  image,
   product
 }) => {
+  const resolvedImage = getAssetUrl(image || (product ? product.thumbnail : '/assets/logo/logo-3d.png'));
+
   useEffect(() => {
     // Update Document Title
     document.title = title.includes('QeQ STUDIO') ? title : `${title} | QeQ STUDIO`;
@@ -43,7 +46,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
 
     updateOG('og:title', title);
     updateOG('og:description', description);
-    updateOG('og:image', image);
+    updateOG('og:image', resolvedImage.startsWith('http') ? resolvedImage : window.location.origin + resolvedImage);
     updateOG('og:url', canonicalUrl);
 
     // Inject JSON-LD Schema
@@ -57,11 +60,12 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
     }
 
     if (product) {
+      const prodImg = getAssetUrl(product.thumbnail);
       const productSchema: Record<string, any> = {
         '@context': 'https://schema.org/',
         '@type': 'Product',
         name: product.name,
-        image: [window.location.origin + product.thumbnail],
+        image: [prodImg.startsWith('http') ? prodImg : window.location.origin + prodImg],
         description: product.description,
         sku: product.sku,
         brand: {
@@ -84,12 +88,13 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
         sameAsUrls.push(BUSINESS_INFO.whatsappUrl);
       }
 
+      const logoUrl = getAssetUrl('/assets/logo/company-logo.jpeg');
       const organizationSchema: Record<string, any> = {
         '@context': 'https://schema.org',
         '@type': 'Organization',
         name: BUSINESS_INFO.brandName,
         url: window.location.origin,
-        logo: window.location.origin + '/assets/logo/company-logo.jpeg',
+        logo: logoUrl.startsWith('http') ? logoUrl : window.location.origin + logoUrl,
         sameAs: sameAsUrls
       };
 
@@ -102,7 +107,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
       }
       scriptTag.text = JSON.stringify(organizationSchema);
     }
-  }, [title, description, canonicalUrl, image, product]);
+  }, [title, description, canonicalUrl, resolvedImage, product]);
 
   return null;
 };

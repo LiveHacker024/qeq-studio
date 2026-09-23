@@ -11,6 +11,7 @@ import { VideoShowcase } from '../components/home/VideoShowcase';
 import { SizeAndCareGuideSection } from '../components/home/SizeAndCareGuideSection';
 import { ProductCard } from '../components/shop/ProductCard';
 import { Sparkles, Gem, ArrowRight, ShieldCheck, HeartHandshake } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetUrl';
 
 interface HomePageProps {
   onNavigate: (path: string) => void;
@@ -138,7 +139,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onProductClick }
 
           <div className="w-full md:w-80 aspect-video rounded-2xl overflow-hidden border border-white/20 shrink-0 shadow-2xl">
             <img
-              src="/assets/animation/hero-hand-editorial.png"
+              src={getAssetUrl('/assets/animation/hero-hand-editorial.png')}
               alt="Try The Look Preview"
               className="w-full h-full object-cover"
             />

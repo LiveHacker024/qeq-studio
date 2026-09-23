@@ -18,6 +18,7 @@ import {
   Search,
   Truck
 } from 'lucide-react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 export const AdminDashboard: React.FC<{ onNavigateHome: () => void }> = ({ onNavigateHome }) => {
   const {
@@ -465,7 +466,7 @@ export const AdminDashboard: React.FC<{ onNavigateHome: () => void }> = ({ onNav
                   <tr key={prod.id} className="hover:bg-white/5 transition-colors">
                     <td className="py-3 px-4">
                       <img
-                        src={prod.thumbnail}
+                        src={getAssetUrl(prod.thumbnail)}
                         alt={prod.name}
                         className="w-10 h-12 rounded-lg object-cover bg-black/40 border border-white/10"
                       />

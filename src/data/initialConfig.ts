@@ -53,16 +53,16 @@ export const SIZE_CHART_DATA = [
 
 const envWhatsapp = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_QEQ_WHATSAPP_NUMBER)
   ? String(import.meta.env.VITE_QEQ_WHATSAPP_NUMBER).trim()
-  : '';
+  : '918447311551';
 
 export const BUSINESS_INFO = {
   brandName: 'QeQ STUDIO',
   tagline: 'Handcrafted Luxury Press-On Nails',
   category: 'Handmade Press-On Nails',
   whatsappNumber: envWhatsapp,
-  whatsappDisplay: envWhatsapp ? `+${envWhatsapp.replace(/[^0-9]/g, '')}` : '',
-  whatsappUrl: envWhatsapp ? `https://wa.me/${envWhatsapp.replace(/[^0-9]/g, '')}` : '',
-  hasWhatsapp: Boolean(envWhatsapp),
+  whatsappDisplay: '+91 84473 11551',
+  whatsappUrl: `https://wa.me/${envWhatsapp.replace(/[^0-9]/g, '') || '918447311551'}`,
+  hasWhatsapp: true,
   instagramHandle: 'nail_art_veloura',
   instagramUrl: 'https://instagram.com/nail_art_veloura',
   supportEmail: 'contact@qeqstudio.com',
@@ -71,3 +71,4 @@ export const BUSINESS_INFO = {
   startingNormalPrice: 249,
   startingPremiumPrice: 299,
 };
+

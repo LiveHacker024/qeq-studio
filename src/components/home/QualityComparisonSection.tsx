@@ -1,5 +1,6 @@
 import React from 'react';
 import { Check, Gem, Sparkles, ArrowRight } from 'lucide-react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 interface QualityComparisonSectionProps {
   onNavigateNormal: () => void;
@@ -73,7 +74,7 @@ export const QualityComparisonSection: React.FC<QualityComparisonSectionProps> =
           {/* Visual Showcase Thumbnail */}
           <div className="relative h-64 rounded-2xl overflow-hidden mb-8 border border-white/10">
             <img
-              src="/assets/products/normal/JHB003.jpg"
+              src={getAssetUrl('/assets/products/normal/JHB003.jpg')}
               alt="Normal Collection Showcase"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
@@ -167,7 +168,7 @@ export const QualityComparisonSection: React.FC<QualityComparisonSectionProps> =
           {/* Visual Showcase Thumbnail */}
           <div className="relative h-64 rounded-2xl overflow-hidden mb-8 border border-blue-500/30">
             <img
-              src="/assets/products/premium/31-1.jpg"
+              src={getAssetUrl('/assets/products/premium/31-1.jpg')}
               alt="Premium Collection Showcase"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />

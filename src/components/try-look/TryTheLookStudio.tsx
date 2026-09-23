@@ -13,6 +13,7 @@ import {
   Camera,
   Layers
 } from 'lucide-react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 interface TryTheLookStudioProps {
   initialProduct?: Product;
@@ -31,9 +32,9 @@ export const TryTheLookStudio: React.FC<TryTheLookStudioProps> = ({ initialProdu
 
   // Default models or custom user uploaded hand photo
   const defaultModels = [
-    { name: 'Model Fair Skin', image: '/assets/animation/hero-hand-editorial.png' },
-    { name: 'Studio Natural', image: '/assets/products/premium/1.jpg' },
-    { name: 'Model Warm Olive', image: '/assets/products/normal/JHB001.jpg' },
+    { name: 'Model Fair Skin', image: getAssetUrl('/assets/animation/hero-hand-editorial.png') },
+    { name: 'Studio Natural', image: getAssetUrl('/assets/products/premium/1.jpg') },
+    { name: 'Model Warm Olive', image: getAssetUrl('/assets/products/normal/JHB001.jpg') },
   ];
 
   const [activeModelImage, setActiveModelImage] = useState(defaultModels[0].image);
@@ -111,7 +112,7 @@ export const TryTheLookStudio: React.FC<TryTheLookStudioProps> = ({ initialProdu
             {/* BACKGROUND LAYER: AFTER (With Selected Press-On Design) */}
             <div className="absolute inset-0 w-full h-full">
               <img
-                src={selectedProduct.thumbnail || activeModelImage}
+                src={getAssetUrl(selectedProduct.thumbnail || activeModelImage)}
                 alt="After - With Press On Nails"
                 className="w-full h-full object-cover"
               />
@@ -126,7 +127,7 @@ export const TryTheLookStudio: React.FC<TryTheLookStudioProps> = ({ initialProdu
               style={{ width: `${sliderPosition}%` }}
             >
               <img
-                src={activeModelImage}
+                src={getAssetUrl(activeModelImage)}
                 alt="Before - Natural Hand"
                 className="absolute inset-0 h-full object-cover max-w-none"
                 style={{ width: containerRef.current ? `${containerRef.current.clientWidth}px` : '100%' }}
@@ -257,7 +258,7 @@ export const TryTheLookStudio: React.FC<TryTheLookStudioProps> = ({ initialProdu
                   }`}
                 >
                   <img
-                    src={prod.thumbnail}
+                    src={getAssetUrl(prod.thumbnail)}
                     alt={prod.name}
                     className="w-full h-full object-cover"
                   />

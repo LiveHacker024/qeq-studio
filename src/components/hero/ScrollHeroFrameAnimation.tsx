@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 interface ScrollHeroFrameAnimationProps {
   totalFrames?: number;
@@ -26,7 +27,7 @@ export const ScrollHeroFrameAnimation: React.FC<ScrollHeroFrameAnimationProps> =
   // Canonical path: 0 -> ezgif-frame-001.jpg, 299 -> ezgif-frame-300.jpg
   const getFrameUrl = useCallback((index: number) => {
     const frameNum = (index + 1).toString().padStart(3, '0');
-    return `/assets/hero-frames/ezgif-frame-${frameNum}.jpg`;
+    return getAssetUrl(`/assets/hero-frames/ezgif-frame-${frameNum}.jpg`);
   }, []);
 
   // Draw image on canvas with high-DPI scaling and precision aspect-ratio fitting

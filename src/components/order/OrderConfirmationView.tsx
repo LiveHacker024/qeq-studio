@@ -14,6 +14,7 @@ import {
   Sparkles 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 interface OrderConfirmationViewProps {
   order: Order;
@@ -140,7 +141,7 @@ export const OrderConfirmationView: React.FC<OrderConfirmationViewProps> = ({
             {order.items.map((item, idx) => (
               <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
                 <img
-                  src={item.productImage}
+                  src={getAssetUrl(item.productImage)}
                   alt={item.productName}
                   className="w-14 h-16 rounded-lg object-cover bg-black/40 border border-white/10 shrink-0"
                 />

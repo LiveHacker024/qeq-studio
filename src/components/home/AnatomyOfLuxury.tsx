@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Layers, Sparkles, Shield, Eye, Droplet, ArrowRight } from 'lucide-react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 export const AnatomyOfLuxury: React.FC<{ onNavigateShop?: () => void }> = ({ onNavigateShop }) => {
   const [activeLayer, setActiveLayer] = useState(0);
@@ -47,7 +48,7 @@ export const AnatomyOfLuxury: React.FC<{ onNavigateShop?: () => void }> = ({ onN
             
             <div className="relative rounded-2xl overflow-hidden bg-black/40">
               <img
-                src="/assets/animation/anatomy-layers.png"
+                src={getAssetUrl('/assets/animation/anatomy-layers.png')}
                 alt="QeQ Studio Press-On Nail Anatomical Layer Breakdown"
                 className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-102"
               />

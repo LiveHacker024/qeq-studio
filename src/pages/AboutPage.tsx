@@ -1,6 +1,7 @@
 import React from 'react';
 import { BUSINESS_INFO } from '../data/initialConfig';
 import { Sparkles, Gem, ShieldCheck, HeartHandshake, ArrowRight } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetUrl';
 
 export const AboutPage: React.FC<{ onNavigateShop: () => void }> = ({ onNavigateShop }) => {
   return (
@@ -26,7 +27,7 @@ export const AboutPage: React.FC<{ onNavigateShop: () => void }> = ({ onNavigate
         <div className="lg:col-span-6 relative">
           <div className="relative rounded-3xl overflow-hidden glass-dark border border-white/15 shadow-2xl">
             <img
-              src="/assets/animation/hero-hand-editorial.png"
+              src={getAssetUrl('/assets/animation/hero-hand-editorial.png')}
               alt="QeQ Studio Handcrafted Press-On Nails"
               className="w-full h-full object-cover"
             />

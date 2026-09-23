@@ -20,6 +20,10 @@ import { OrderConfirmationView } from './components/order/OrderConfirmationView'
 import { AccountPage } from './pages/AccountPage';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
+import { TermsPage } from './pages/TermsPage';
+import { ShippingPolicyPage } from './pages/ShippingPolicyPage';
+import { ReturnPolicyPage } from './pages/ReturnPolicyPage';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { Order } from './types';
 
@@ -216,7 +220,27 @@ const MainAppContent: React.FC = () => {
       return <ContactPage />;
     }
 
-    // 13. Admin Dashboard
+    // 13. Privacy Policy
+    if (currentPath === '/privacy-policy') {
+      return <PrivacyPolicyPage />;
+    }
+
+    // 14. Terms and Conditions
+    if (currentPath === '/terms' || currentPath === '/terms-and-conditions') {
+      return <TermsPage />;
+    }
+
+    // 15. Shipping Policy
+    if (currentPath === '/shipping-policy' || currentPath === '/shipping') {
+      return <ShippingPolicyPage />;
+    }
+
+    // 16. Return & Refund Policy
+    if (currentPath === '/return-policy' || currentPath === '/returns') {
+      return <ReturnPolicyPage />;
+    }
+
+    // 17. Admin Dashboard
     if (currentPath === '/admin') {
       return <AdminDashboard onNavigateHome={() => navigate('/')} />;
     }
@@ -244,8 +268,8 @@ const MainAppContent: React.FC = () => {
         />
       )}
 
-      {/* Main Content View with padding for fixed navbar */}
-      <main className={`flex-1 ${!isAdminPage && currentPath !== '/' ? 'pt-24' : ''}`}>
+      {/* Main Content View */}
+      <main className="flex-1">
         {renderRoute()}
       </main>
 

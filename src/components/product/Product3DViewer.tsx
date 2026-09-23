@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Product } from '../../types';
 import { RotateCw, ZoomIn, Sparkles, Layers, Eye, RefreshCw } from 'lucide-react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 interface Product3DViewerProps {
   product: Product;
@@ -109,7 +110,7 @@ export const Product3DViewer: React.FC<Product3DViewerProps> = ({ product }) => 
 
             {/* Main Product Image with realistic 3D displacement */}
             <img
-              src={product.thumbnail}
+              src={getAssetUrl(product.thumbnail)}
               alt={product.name}
               className="w-full h-full object-contain rounded-2xl drop-shadow-2xl pointer-events-none"
             />
@@ -119,7 +120,7 @@ export const Product3DViewer: React.FC<Product3DViewerProps> = ({ product }) => 
         {activeTab === 'exploded-layers' && (
           <div className="relative w-full h-full p-4 flex items-center justify-center bg-black/40 animate-fade-in">
             <img
-              src="/assets/animation/anatomy-layers.png"
+              src={getAssetUrl('/assets/animation/anatomy-layers.png')}
               alt="Exploded Anatomy of Gel Press-On Layers"
               className="w-full h-full object-contain"
             />
@@ -129,7 +130,7 @@ export const Product3DViewer: React.FC<Product3DViewerProps> = ({ product }) => 
         {activeTab === 'macro-video' && (
           <div className="relative w-full h-full bg-black animate-fade-in">
             <video
-              src="/assets/animation/nail-360-turntable.mp4"
+              src={getAssetUrl('/assets/animation/nail-360-turntable.mp4')}
               autoPlay
               loop
               muted

@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { 
   Search, 
-  Heart, 
   ShoppingBag, 
   User, 
   Menu, 
   X, 
-  Sparkles, 
-  ShieldCheck, 
-  Layers
+  ChevronDown
 } from 'lucide-react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 interface NavbarProps {
   currentPath: string;
@@ -20,7 +18,6 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate }) => {
   const { 
     cartItemCount, 
-    wishlist, 
     setIsCartOpen, 
     setIsSearchOpen 
   } = useStore();
@@ -31,51 +28,44 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 30) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 20);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
+  // Desktop Center navigation links
+  const centerNavLinks = [
     { label: 'HOME', path: '/' },
     { label: 'SHOP', path: '/shop' },
     { label: 'COLLECTIONS', path: '/collections', isDropdown: true },
-    { label: 'PREMIUM', path: '/shop/premium', badge: '₹299' },
-    { label: 'CUSTOM NAILS', path: '/#custom-studio', badge: 'STUDIO' },
-    { label: 'TRY THE LOOK', path: '/try-the-look' },
+    { label: 'CUSTOM NAILS', path: '/#custom-studio' },
     { label: 'ABOUT', path: '/about' },
-    { label: 'CONTACT', path: '/contact' },
   ];
 
-  const collectionItems = [
-    { title: 'New Arrivals', path: '/collections/new-arrivals', desc: 'Latest salon drops' },
-    { title: 'Normal Collection (₹249)', path: '/shop/normal', desc: 'Everyday elegance' },
-    { title: 'Premium Collection (₹299)', path: '/shop/premium', desc: 'Handcrafted luxury' },
+  const collectionDropdownItems = [
+    { title: 'All Collections', path: '/collections', desc: 'Curated studio showcase' },
+    { title: 'Normal Collection (₹249)', path: '/shop/normal', desc: '3 Packs × 24 Nails (72 Total)' },
+    { title: 'Premium Collection (₹299)', path: '/shop/premium', desc: '1 Premium Pack (10 Nails)' },
+    { title: 'New Arrivals', path: '/collections/new-arrivals', desc: 'Fresh salon drops' },
     { title: 'Bridal & Couture', path: '/collections/bridal', desc: 'Wedding & statement sets' },
     { title: 'Cat-Eye & Chrome', path: '/collections/chrome', desc: 'Reflective mirror finish' },
-    { title: 'Minimal Elegance', path: '/collections/minimal', desc: 'Clean nude aesthetics' },
   ];
 
   const handleNavClick = (path: string) => {
+    setIsMobileMenuOpen(false);
+    setIsCollectionsHovered(false);
+
     if (path.includes('#custom-studio')) {
       if (currentPath === '/' || currentPath === '' || currentPath === '/#custom-studio') {
         const el = document.getElementById('custom-studio');
         if (el) {
           el.scrollIntoView({ behavior: 'smooth' });
-          setIsMobileMenuOpen(false);
-          setIsCollectionsHovered(false);
           return;
         }
       }
       onNavigate('/');
-      setIsMobileMenuOpen(false);
-      setIsCollectionsHovered(false);
       setTimeout(() => {
         const el = document.getElementById('custom-studio');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -84,50 +74,56 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate }) => {
     }
 
     onNavigate(path);
-    setIsMobileMenuOpen(false);
-    setIsCollectionsHovered(false);
+  };
+
+  const isLinkActive = (path: string) => {
+    if (path === '/') return currentPath === '/' || currentPath === '';
+    if (path === '/shop') return currentPath === '/shop' || currentPath.startsWith('/shop/');
+    if (path === '/collections') return currentPath.startsWith('/collections');
+    if (path === '/about') return currentPath === '/about';
+    return currentPath === path;
   };
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+      className={`sticky top-0 left-0 right-0 z-40 transition-all duration-300 border-b ${
         isScrolled 
-          ? 'glass-nav-scrolled py-3 bg-[#08080A]/90' 
-          : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent py-5'
+          ? 'bg-[#0B0B0B]/95 backdrop-blur-md border-white/10 shadow-lg shadow-black/40 py-2.5' 
+          : 'bg-[#0B0B0B] border-white/10 py-3.5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between h-12">
           
           {/* LEFT: Brand Logo */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center">
             <button
               onClick={() => handleNavClick('/')}
-              className="group flex items-center gap-3 focus:outline-none"
+              className="flex items-center gap-3 focus:outline-none group text-left"
               aria-label="QeQ STUDIO Home"
             >
-              <div className="relative w-9 h-9 sm:w-11 sm:h-11 rounded-full overflow-hidden p-0.5 bg-white shadow-md group-hover:scale-105 transition-transform duration-300 border border-blue-500/40">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden p-0.5 bg-white border border-white/20 shadow-md group-hover:scale-105 transition-transform shrink-0">
                 <img
-                  src="/assets/logo/company-logo.jpeg"
-                  alt="QeQ STUDIO Logo"
+                  src={getAssetUrl('/assets/logo/company-logo.jpeg')}
+                  alt="QeQ STUDIO"
                   className="w-full h-full object-contain rounded-full"
                 />
               </div>
-              <div className="flex flex-col text-left">
-                <span className="font-editorial text-lg sm:text-xl font-bold tracking-widest text-white group-hover:text-blue-400 transition-colors">
-                  Q<span className="text-blue-500">e</span>Q <span className="font-light tracking-[0.25em] text-xs sm:text-sm text-gray-300">STUDIO</span>
+              <div className="flex flex-col">
+                <span className="font-editorial text-base sm:text-lg font-bold tracking-widest text-white group-hover:text-gray-300 transition-colors">
+                  Q<span className="text-[#C8A96B]">e</span>Q <span className="font-light tracking-[0.2em] text-xs sm:text-sm text-gray-300">STUDIO</span>
                 </span>
-                <span className="text-[9px] tracking-[0.3em] uppercase text-gray-400 font-medium -mt-1 hidden sm:block">
-                  Luxury Press-On Nails
+                <span className="text-[9px] tracking-[0.22em] uppercase text-gray-400 font-medium -mt-1 hidden sm:block">
+                  Handmade Press-On Nails
                 </span>
               </div>
             </button>
           </div>
 
-          {/* CENTER: Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-7">
-            {navLinks.map(link => {
-              const isActive = currentPath === link.path;
+          {/* CENTER: Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-8">
+            {centerNavLinks.map(link => {
+              const active = isLinkActive(link.path);
 
               if (link.isDropdown) {
                 return (
@@ -138,30 +134,31 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate }) => {
                     onMouseLeave={() => setIsCollectionsHovered(false)}
                   >
                     <button
-                      onClick={() => handleNavClick('/shop')}
-                      className={`text-xs font-semibold tracking-[0.18em] transition-all duration-200 flex items-center gap-1 py-2 ${
-                        currentPath.startsWith('/collections') ? 'text-blue-400 font-bold' : 'text-gray-300 hover:text-white'
+                      onClick={() => handleNavClick('/collections')}
+                      className={`text-xs font-semibold tracking-[0.16em] py-2 flex items-center gap-1.5 transition-colors ${
+                        active ? 'text-white font-bold' : 'text-gray-300 hover:text-white'
                       }`}
                     >
-                      {link.label}
+                      <span>{link.label}</span>
+                      <ChevronDown className="w-3 h-3 text-gray-400" />
                     </button>
 
                     {/* Dropdown Menu */}
                     {isCollectionsHovered && (
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 w-72 glass-dark-elevated rounded-xl shadow-2xl p-3 border border-white/15 animate-fade-in z-50">
-                        <div className="text-[10px] uppercase font-bold tracking-wider text-gray-400 px-3 py-1.5 border-b border-white/10 mb-1">
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 w-72 bg-[#151515] rounded-xl shadow-2xl p-2.5 border border-white/15 animate-fade-in z-50">
+                        <div className="text-[10px] uppercase font-bold tracking-wider text-gray-400 px-3 py-1 border-b border-white/10 mb-1">
                           Curated Collections
                         </div>
-                        {collectionItems.map(item => (
+                        {collectionDropdownItems.map(item => (
                           <button
                             key={item.title}
                             onClick={() => handleNavClick(item.path)}
-                            className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 transition-all flex flex-col group/item"
+                            className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 transition-colors flex flex-col group"
                           >
-                            <span className="text-xs font-semibold text-gray-200 group-hover/item:text-blue-400 transition-colors">
+                            <span className="text-xs font-medium text-gray-200 group-hover:text-[#E2C98A] transition-colors">
                               {item.title}
                             </span>
-                            <span className="text-[10px] text-gray-400 group-hover/item:text-gray-300">
+                            <span className="text-[10px] text-gray-400">
                               {item.desc}
                             </span>
                           </button>
@@ -176,81 +173,55 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate }) => {
                 <button
                   key={link.label}
                   onClick={() => handleNavClick(link.path)}
-                  className={`relative text-xs font-semibold tracking-[0.18em] transition-all duration-200 py-2 flex items-center gap-1.5 ${
-                    isActive ? 'text-blue-400 font-bold' : 'text-gray-300 hover:text-white'
+                  className={`relative text-xs font-semibold tracking-[0.16em] py-2 transition-colors ${
+                    active ? 'text-white font-bold' : 'text-gray-300 hover:text-white'
                   }`}
                 >
                   {link.label}
-                  {link.badge && (
-                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-blue-600/30 text-blue-300 border border-blue-500/40 font-bold tracking-wider">
-                      {link.badge}
-                    </span>
-                  )}
-                  {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-500 to-champagne-gold rounded-full" />
+                  {active && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C8A96B] rounded-full" />
                   )}
                 </button>
               );
             })}
           </nav>
 
-          {/* RIGHT: Quick Action Icons */}
-          <div className="flex items-center gap-2 sm:gap-4">
+          {/* RIGHT: Search, Account, Cart */}
+          <div className="flex items-center gap-1.5 sm:gap-3">
             
-            {/* Search Button */}
+            {/* Search Icon */}
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="p-2 text-gray-300 hover:text-white rounded-full hover:bg-white/10 transition-colors relative"
+              className="p-2 text-gray-300 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
               aria-label="Search Catalog"
+              title="Search Catalog"
             >
               <Search className="w-5 h-5" />
             </button>
 
-            {/* Wishlist Button */}
-            <button
-              onClick={() => handleNavClick('/wishlist')}
-              className="p-2 text-gray-300 hover:text-white rounded-full hover:bg-white/10 transition-colors relative"
-              aria-label="Wishlist"
-            >
-              <Heart className="w-5 h-5" />
-              {wishlist.length > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-rose-600 text-white text-[10px] font-bold flex items-center justify-center animate-pulse">
-                  {wishlist.length}
-                </span>
-              )}
-            </button>
-
-            {/* Cart Button */}
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="p-2 text-gray-300 hover:text-white rounded-full hover:bg-white/10 transition-colors relative group"
-              aria-label="Shopping Bag"
-            >
-              <ShoppingBag className="w-5 h-5 group-hover:scale-105 transition-transform" />
-              {cartItemCount > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center shadow-lg shadow-blue-600/50">
-                  {cartItemCount}
-                </span>
-              )}
-            </button>
-
-            {/* Account / Admin */}
+            {/* Account Icon */}
             <button
               onClick={() => handleNavClick('/account')}
-              className="p-2 text-gray-300 hover:text-white rounded-full hover:bg-white/10 transition-colors hidden sm:flex items-center"
-              aria-label="Customer Account"
+              className="p-2 text-gray-300 hover:text-white rounded-lg hover:bg-white/10 transition-colors hidden sm:flex items-center"
+              aria-label="Customer Account & Orders"
+              title="My Account"
             >
               <User className="w-5 h-5" />
             </button>
 
-            {/* Admin shortcut badge */}
+            {/* Cart Icon with Item Count */}
             <button
-              onClick={() => handleNavClick('/admin')}
-              className="hidden xl:flex items-center gap-1 text-[10px] font-bold tracking-wider px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/15 text-gray-400 hover:text-white border border-white/10 transition-colors"
-              title="Admin Portal"
+              onClick={() => setIsCartOpen(true)}
+              className="p-2 text-gray-300 hover:text-white rounded-lg hover:bg-white/10 transition-colors relative"
+              aria-label="Shopping Bag"
+              title="Shopping Bag"
             >
-              <ShieldCheck className="w-3 h-3 text-blue-400" />
-              <span>ADMIN</span>
+              <ShoppingBag className="w-5 h-5" />
+              {cartItemCount > 0 && (
+                <span className="absolute top-1 right-1 min-w-[18px] h-[18px] rounded-full bg-[#1A56DB] text-white text-[10px] font-bold flex items-center justify-center px-1 shadow-sm">
+                  {cartItemCount}
+                </span>
+              )}
             </button>
 
             {/* Mobile Hamburger Toggle */}
@@ -266,64 +237,70 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate }) => {
         </div>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Navigation Drawer */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 top-[68px] bg-[#08080A]/98 backdrop-blur-2xl z-50 border-t border-white/10 overflow-y-auto animate-fade-in p-6">
-          <div className="flex flex-col gap-4">
+        <div className="lg:hidden fixed inset-x-0 top-[60px] bottom-0 bg-[#0B0B0B]/98 backdrop-blur-xl z-50 border-t border-white/10 overflow-y-auto p-5 animate-fade-in">
+          <div className="flex flex-col gap-2 max-w-md mx-auto">
             
-            <div className="text-[10px] uppercase font-bold tracking-widest text-blue-400 border-b border-white/10 pb-2">
-              Menu Navigation
+            <div className="text-[10px] uppercase font-bold tracking-widest text-gray-400 pb-2 border-b border-white/10">
+              Menu
             </div>
 
-            {navLinks.map(link => (
-              <button
-                key={link.label}
-                onClick={() => handleNavClick(link.path)}
-                className={`text-left text-base font-semibold tracking-wider py-2.5 px-3 rounded-lg flex items-center justify-between ${
-                  currentPath === link.path ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30' : 'text-gray-200 hover:bg-white/5'
-                }`}
-              >
-                <span>{link.label}</span>
-                {link.badge && (
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-blue-600/40 text-blue-200 border border-blue-500/40 font-bold">
-                    {link.badge}
-                  </span>
-                )}
-              </button>
-            ))}
-
-            <div className="text-[10px] uppercase font-bold tracking-widest text-gray-400 border-b border-white/10 pb-2 pt-4">
-              Explore Collections
-            </div>
-
-            <div className="grid grid-cols-2 gap-2">
-              {collectionItems.map(item => (
+            {centerNavLinks.map(link => {
+              const active = isLinkActive(link.path);
+              return (
                 <button
-                  key={item.title}
-                  onClick={() => handleNavClick(item.path)}
-                  className="p-3 text-left rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 text-xs text-gray-300 hover:text-white"
+                  key={link.label}
+                  onClick={() => handleNavClick(link.path)}
+                  className={`w-full text-left text-sm font-semibold tracking-wider py-3 px-3.5 rounded-xl transition-colors ${
+                    active ? 'bg-white/10 text-white font-bold border border-white/10' : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                  }`}
                 >
-                  <div className="font-semibold text-blue-300 text-xs mb-0.5">{item.title}</div>
-                  <div className="text-[10px] text-gray-400">{item.desc}</div>
+                  {link.label}
                 </button>
-              ))}
+              );
+            })}
+
+            <div className="text-[10px] uppercase font-bold tracking-widest text-gray-400 pt-4 pb-2 border-b border-white/10">
+              Collections
             </div>
 
-            <div className="border-t border-white/10 pt-4 mt-2 flex items-center justify-between">
+            <div className="grid grid-cols-1 gap-1.5">
+              <button
+                onClick={() => handleNavClick('/shop/normal')}
+                className="w-full text-left p-3 rounded-xl bg-white/5 text-xs text-gray-300 hover:text-white flex items-center justify-between"
+              >
+                <span>Normal Collection (72 Nails)</span>
+                <span className="font-mono text-[#E2C98A] font-bold">₹249</span>
+              </button>
+              <button
+                onClick={() => handleNavClick('/shop/premium')}
+                className="w-full text-left p-3 rounded-xl bg-white/5 text-xs text-gray-300 hover:text-white flex items-center justify-between"
+              >
+                <span>Premium Collection (10 Nails)</span>
+                <span className="font-mono text-[#E2C98A] font-bold">₹299</span>
+              </button>
+              <button
+                onClick={() => handleNavClick('/try-the-look')}
+                className="w-full text-left p-3 rounded-xl bg-white/5 text-xs text-gray-300 hover:text-white"
+              >
+                Try The Look (Virtual Fitting)
+              </button>
+            </div>
+
+            <div className="border-t border-white/10 pt-4 mt-2 flex flex-col gap-2">
               <button
                 onClick={() => handleNavClick('/account')}
-                className="flex items-center gap-2 text-sm text-gray-300 hover:text-white py-2"
+                className="flex items-center gap-2.5 text-xs text-gray-300 hover:text-white py-2 px-3 rounded-lg hover:bg-white/5"
               >
-                <User className="w-4 h-4 text-blue-400" />
+                <User className="w-4 h-4 text-[#C8A96B]" />
                 <span>My Account & Orders</span>
               </button>
-
               <button
-                onClick={() => handleNavClick('/admin')}
-                className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-blue-300 py-2"
+                onClick={() => handleNavClick('/contact')}
+                className="text-left text-xs text-gray-400 hover:text-white py-2 px-3 rounded-lg hover:bg-white/5"
               >
-                <ShieldCheck className="w-4 h-4 text-blue-400" />
-                <span>Admin Studio</span>
+                Contact & Support
               </button>
             </div>
 

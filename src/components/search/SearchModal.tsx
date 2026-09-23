@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { Search, X, ArrowRight, Sparkles, Gem } from 'lucide-react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 interface SearchModalProps {
   onSelectProduct: (slug: string) => void;
@@ -119,7 +120,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ onSelectProduct }) => 
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <img
-                      src={item.thumbnail}
+                      src={getAssetUrl(item.thumbnail)}
                       alt={item.name}
                       className="w-12 h-14 rounded-lg object-cover bg-black/40 border border-white/10 shrink-0"
                     />

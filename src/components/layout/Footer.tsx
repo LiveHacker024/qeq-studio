@@ -7,9 +7,10 @@ import {
   Mail, 
   ArrowRight, 
   Check, 
-  Sparkles, 
-  Clock 
+  Clock, 
+  Phone
 } from 'lucide-react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 export const Footer: React.FC<{ onNavigate: (path: string) => void }> = ({ onNavigate }) => {
   const { showToast } = useStore();
@@ -19,52 +20,50 @@ export const Footer: React.FC<{ onNavigate: (path: string) => void }> = ({ onNav
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !email.includes('@')) {
-      showToast('Invalid Email', 'Please provide a valid email address.', 'error');
+      showToast('Invalid Email', 'Please enter a valid email address.', 'error');
       return;
     }
     setSubscribed(true);
-    showToast('Subscribed', 'Thank you for subscribing to QeQ STUDIO drops!');
+    showToast('Subscribed', 'Thank you for subscribing to QeQ STUDIO updates!');
     setEmail('');
   };
 
   return (
-    <footer className="bg-[#050507] border-t border-white/10 text-gray-400 text-sm">
+    <footer className="bg-[#0A0A0A] border-t border-white/10 text-gray-400 text-sm">
       
-      {/* Newsletter VIP Banner */}
-      <div className="border-b border-white/10 bg-gradient-to-b from-blue-950/20 to-transparent py-14 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-blue-400 mb-2 block">
-            Studio Updates
+      {/* Newsletter Banner */}
+      <div className="border-b border-white/10 py-12 px-4 sm:px-6 lg:px-8 bg-[#0D0D0D]">
+        <div className="max-w-3xl mx-auto text-center">
+          <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#C8A96B] mb-2 block">
+            Studio Newsletter
           </span>
-          <h3 className="font-editorial text-2xl sm:text-4xl text-white font-bold tracking-wide mb-3">
-            SUBSCRIBE FOR NEW RELEASES
+          <h3 className="font-editorial text-2xl sm:text-3xl text-white font-bold tracking-wide mb-2">
+            SUBSCRIBE FOR NEW DROPS
           </h3>
-          <p className="text-gray-300 text-sm sm:text-base max-w-xl mx-auto mb-8 font-light">
-            Stay updated on new handmade design releases and exclusive seasonal collections.
+          <p className="text-gray-400 text-xs sm:text-sm max-w-md mx-auto mb-6 leading-relaxed">
+            Get notified about new handmade design releases and seasonal collections.
           </p>
 
-          <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <div className="relative flex-1">
-              <input
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="Enter your email address"
-                required
-                className="w-full bg-white/5 border border-white/15 rounded-full px-5 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
-              />
-            </div>
+          <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2.5 max-w-md mx-auto">
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="Enter your email address"
+              required
+              className="flex-1 bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+            />
             <button
               type="submit"
-              className="btn-luxury-primary px-7 py-3.5 text-xs uppercase tracking-widest whitespace-nowrap shadow-lg shadow-blue-600/30"
+              className="btn-luxury-primary px-6 py-2.5 text-xs uppercase tracking-widest whitespace-nowrap font-bold"
             >
               {subscribed ? (
                 <>
-                  <Check className="w-4 h-4" /> Subscribed
+                  <Check className="w-3.5 h-3.5" /> Subscribed
                 </>
               ) : (
                 <>
-                  Subscribe <ArrowRight className="w-4 h-4" />
+                  Subscribe <ArrowRight className="w-3.5 h-3.5" />
                 </>
               )}
             </button>
@@ -73,138 +72,140 @@ export const Footer: React.FC<{ onNavigate: (path: string) => void }> = ({ onNav
       </div>
 
       {/* Main Footer Links */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           
-          {/* Brand Col */}
+          {/* Brand Info */}
           <div className="lg:col-span-2 flex flex-col gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-white p-0.5 overflow-hidden border border-blue-500/40">
+              <div className="w-9 h-9 rounded-full bg-white p-0.5 overflow-hidden border border-white/20">
                 <img
-                  src="/assets/logo/company-logo.jpeg"
+                  src={getAssetUrl('/assets/logo/company-logo.jpeg')}
                   alt="QeQ STUDIO"
                   className="w-full h-full object-contain rounded-full"
                 />
               </div>
-              <span className="font-editorial text-2xl font-bold tracking-widest text-white">
-                Q<span className="text-blue-500">e</span>Q <span className="text-sm font-light tracking-[0.25em] text-gray-300">STUDIO</span>
+              <span className="font-editorial text-xl font-bold tracking-widest text-white">
+                Q<span className="text-[#C8A96B]">e</span>Q <span className="text-xs font-light tracking-[0.2em] text-gray-300">STUDIO</span>
               </span>
             </div>
 
-            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              Handmade press-on nails. Normal Collection with 3 packs (72 handmade nails total) for ₹249 and Premium Collection with 1 pack (10 handmade nails) for ₹299.
+            <p className="text-gray-400 text-xs leading-relaxed max-w-sm">
+              Handmade luxury press-on nails. Normal Collection (3 packs × 24 nails = 72 nails for ₹249) and Premium Collection (1 pack = 10 nails for ₹299).
             </p>
 
-            {/* Social Buttons */}
-            <div className="flex items-center gap-3 pt-2">
-              {BUSINESS_INFO.hasWhatsapp && (
-                <a
-                  href={BUSINESS_INFO.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-emerald-950/40 border border-emerald-500/30 flex items-center justify-center text-emerald-400 hover:bg-emerald-600 hover:text-white transition-all"
-                  aria-label="Direct WhatsApp Support"
-                >
-                  <MessageCircle className="w-5 h-5" />
-                </a>
-              )}
+            {/* Direct Contact Channels */}
+            <div className="flex flex-col gap-2 pt-1 text-xs text-gray-300">
               <a
-                href={BUSINESS_INFO.instagramUrl}
+                href={BUSINESS_INFO.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-pink-950/40 border border-pink-500/30 flex items-center justify-center text-pink-400 hover:bg-pink-600 hover:text-white transition-all"
-                aria-label="Official Instagram"
+                className="flex items-center gap-2 hover:text-emerald-400 transition-colors"
               >
-                <InstagramIcon className="w-5 h-5" />
+                <MessageCircle className="w-4 h-4 text-emerald-400" />
+                <span>WhatsApp: {BUSINESS_INFO.whatsappDisplay}</span>
               </a>
               <a
                 href={`mailto:${BUSINESS_INFO.supportEmail}`}
-                className="w-10 h-10 rounded-full bg-blue-950/40 border border-blue-500/30 flex items-center justify-center text-blue-400 hover:bg-blue-600 hover:text-white transition-all"
-                aria-label="Email Studio"
+                className="flex items-center gap-2 hover:text-[#C8A96B] transition-colors"
               >
-                <Mail className="w-5 h-5" />
+                <Mail className="w-4 h-4 text-[#C8A96B]" />
+                <span>{BUSINESS_INFO.supportEmail}</span>
               </a>
+              <div className="flex items-center gap-2 text-gray-400">
+                <Clock className="w-4 h-4 text-gray-500" />
+                <span>{BUSINESS_INFO.hours}</span>
+              </div>
             </div>
           </div>
 
           {/* Col 1: Shop */}
-          <div className="flex flex-col gap-3">
-            <h4 className="font-editorial text-sm font-bold text-white tracking-widest uppercase mb-1">
+          <div className="flex flex-col gap-2.5">
+            <h4 className="font-editorial text-xs font-bold text-white tracking-wider uppercase mb-1">
               Shop
             </h4>
-            <button onClick={() => onNavigate('/shop')} className="text-left text-xs hover:text-blue-400 transition-colors">
-              All Handmade Sets (124)
+            <button onClick={() => onNavigate('/shop')} className="text-left text-xs hover:text-white transition-colors">
+              All Handmade Sets
             </button>
-            <button onClick={() => onNavigate('/shop/normal')} className="text-left text-xs hover:text-blue-400 transition-colors flex items-center gap-1.5">
+            <button onClick={() => onNavigate('/shop/normal')} className="text-left text-xs hover:text-white transition-colors flex items-center justify-between">
               <span>Normal Collection</span>
-              <span className="text-[10px] text-blue-400 font-bold">₹249</span>
+              <span className="font-mono text-[10px] text-[#E2C98A]">₹249</span>
             </button>
-            <button onClick={() => onNavigate('/shop/premium')} className="text-left text-xs hover:text-blue-400 transition-colors flex items-center gap-1.5">
+            <button onClick={() => onNavigate('/shop/premium')} className="text-left text-xs hover:text-white transition-colors flex items-center justify-between">
               <span>Premium Collection</span>
-              <span className="text-[10px] text-champagne-gold font-bold">₹299</span>
+              <span className="font-mono text-[10px] text-[#E2C98A]">₹299</span>
             </button>
-            <button onClick={() => onNavigate('/try-the-look')} className="text-left text-xs text-champagne-gold hover:text-white transition-colors flex items-center gap-1">
-              <Sparkles className="w-3 h-3" /> Try The Look Studio
+            <button onClick={() => onNavigate('/#custom-studio')} className="text-left text-xs hover:text-white transition-colors">
+              Design Your Own Nails
             </button>
-          </div>
-
-          {/* Col 2: Collections */}
-          <div className="flex flex-col gap-3">
-            <h4 className="font-editorial text-sm font-bold text-white tracking-widest uppercase mb-1">
-              Collections
-            </h4>
-            <button onClick={() => onNavigate('/collections')} className="text-left text-xs hover:text-blue-400 transition-colors">
-              Collections Overview
-            </button>
-            <button onClick={() => onNavigate('/shop/normal')} className="text-left text-xs hover:text-blue-400 transition-colors">
-              Normal Collection (72 Nails)
-            </button>
-            <button onClick={() => onNavigate('/shop/premium')} className="text-left text-xs hover:text-blue-400 transition-colors">
-              Premium Collection (10 Nails)
+            <button onClick={() => onNavigate('/try-the-look')} className="text-left text-xs text-[#C8A96B] hover:text-white transition-colors">
+              Try The Look Studio
             </button>
           </div>
 
-          {/* Col 3: Customer Care & Info */}
-          <div className="flex flex-col gap-3">
-            <h4 className="font-editorial text-sm font-bold text-white tracking-widest uppercase mb-1">
+          {/* Col 2: Customer Care */}
+          <div className="flex flex-col gap-2.5">
+            <h4 className="font-editorial text-xs font-bold text-white tracking-wider uppercase mb-1">
               Customer Care
             </h4>
-            <button onClick={() => onNavigate('/about')} className="text-left text-xs hover:text-blue-400 transition-colors">
-              Sizing & Care Guide
+            <button onClick={() => onNavigate('/about')} className="text-left text-xs hover:text-white transition-colors">
+              About QeQ STUDIO
             </button>
-            <button onClick={() => onNavigate('/account')} className="text-left text-xs hover:text-blue-400 transition-colors">
-              Track Your Order
+            <button onClick={() => onNavigate('/contact')} className="text-left text-xs hover:text-white transition-colors">
+              Contact & Sizing Help
             </button>
-            <button onClick={() => onNavigate('/contact')} className="text-left text-xs hover:text-blue-400 transition-colors">
-              Contact Us
+            <button onClick={() => onNavigate('/account')} className="text-left text-xs hover:text-white transition-colors">
+              Track Order / Account
+            </button>
+            <button onClick={() => onNavigate('/#custom-studio')} className="text-left text-xs hover:text-white transition-colors">
+              Bulk Custom Orders
+            </button>
+          </div>
+
+          {/* Col 3: Policies & Legal */}
+          <div className="flex flex-col gap-2.5">
+            <h4 className="font-editorial text-xs font-bold text-white tracking-wider uppercase mb-1">
+              Policies & Legal
+            </h4>
+            <button onClick={() => onNavigate('/privacy-policy')} className="text-left text-xs hover:text-white transition-colors">
+              Privacy Policy
+            </button>
+            <button onClick={() => onNavigate('/terms')} className="text-left text-xs hover:text-white transition-colors">
+              Terms & Conditions
+            </button>
+            <button onClick={() => onNavigate('/shipping-policy')} className="text-left text-xs hover:text-white transition-colors">
+              Shipping & Delivery
+            </button>
+            <button onClick={() => onNavigate('/return-policy')} className="text-left text-xs hover:text-white transition-colors">
+              Return & Refund Policy
             </button>
           </div>
 
         </div>
 
-        {/* Studio Direct Details Bar */}
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-400">
-          <div className="flex items-center gap-6 flex-wrap justify-center md:justify-start">
-            {BUSINESS_INFO.hasWhatsapp && (
-              <span className="flex items-center gap-1.5">
-                <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
-                WhatsApp: {BUSINESS_INFO.whatsappDisplay}
-              </span>
-            )}
-            <span className="flex items-center gap-1.5">
-              <InstagramIcon className="w-3.5 h-3.5 text-pink-400" />
-              @{BUSINESS_INFO.instagramHandle}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-blue-400" />
-              {BUSINESS_INFO.hours}
-            </span>
+        {/* Bottom Bar */}
+        <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+          <div>
+            © {new Date().getFullYear()} {BUSINESS_INFO.brandName}. All rights reserved.
           </div>
 
-          <div className="flex items-center gap-4 text-gray-400">
-            <span>© {new Date().getFullYear()} QeQ STUDIO. All rights reserved.</span>
-            <button onClick={() => onNavigate('/admin')} className="hover:text-blue-400 transition-colors">
-              Admin Portal
+          <div className="flex items-center gap-4">
+            <a
+              href={BUSINESS_INFO.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors flex items-center gap-1"
+            >
+              <InstagramIcon className="w-3.5 h-3.5" />
+              <span>Instagram</span>
+            </a>
+            <span>•</span>
+            <button onClick={() => onNavigate('/privacy-policy')} className="hover:text-white transition-colors">
+              Privacy
+            </button>
+            <span>•</span>
+            <button onClick={() => onNavigate('/terms')} className="hover:text-white transition-colors">
+              Terms
             </button>
           </div>
         </div>

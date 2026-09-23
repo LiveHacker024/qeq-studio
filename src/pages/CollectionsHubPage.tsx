@@ -1,6 +1,7 @@
 import React from 'react';
 import { useStore } from '../context/StoreContext';
 import { Sparkles, ArrowRight, Gem } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetUrl';
 
 interface CollectionsHubPageProps {
   onNavigateShop: (category?: string, tier?: 'all' | 'normal' | 'premium') => void;
@@ -15,7 +16,7 @@ export const CollectionsHubPage: React.FC<CollectionsHubPageProps> = ({ onNaviga
       slug: 'normal',
       subtitle: `3 Packs × 24 Nails (72 Nails Total) • ₹${storeConfig.normalPrice}`,
       desc: 'Clean, elegant, lightweight handmade gel press-ons with 72 nails across 3 individual packs.',
-      image: '/assets/products/normal/JHB001.jpg',
+      image: getAssetUrl('/assets/products/normal/JHB001.jpg'),
       badge: `₹${storeConfig.normalPrice} (72 Nails)`,
       badgeColor: 'bg-blue-600/30 text-blue-200 border-blue-500/40',
       action: () => onNavigateShop(undefined, 'normal')
@@ -25,7 +26,7 @@ export const CollectionsHubPage: React.FC<CollectionsHubPageProps> = ({ onNaviga
       slug: 'premium',
       subtitle: `1 Premium Pack (10 Handmade Nails) • ₹${storeConfig.premiumPrice}`,
       desc: 'Handcrafted premium 3D artistry, luxury embellishments, and layered gel aesthetics.',
-      image: '/assets/products/premium/1.jpg',
+      image: getAssetUrl('/assets/products/premium/1.jpg'),
       badge: `₹${storeConfig.premiumPrice} (10 Nails)`,
       badgeColor: 'bg-champagne-gold/25 text-champagne-soft border-champagne-gold/40',
       action: () => onNavigateShop(undefined, 'premium')
@@ -35,7 +36,7 @@ export const CollectionsHubPage: React.FC<CollectionsHubPageProps> = ({ onNaviga
       slug: 'bridal',
       subtitle: 'Wedding & Celebration Atelier',
       desc: 'Pearl inlays, lace embellishments, and opulent white-gold French tips.',
-      image: '/assets/products/premium/31-1.jpg',
+      image: getAssetUrl('/assets/products/premium/31-1.jpg'),
       badge: 'Haute Couture',
       badgeColor: 'bg-pink-600/30 text-pink-200 border-pink-500/40',
       action: () => onNavigateShop('Bridal')
@@ -45,7 +46,7 @@ export const CollectionsHubPage: React.FC<CollectionsHubPageProps> = ({ onNaviga
       slug: 'chrome',
       subtitle: 'Reflective Mirror Finish',
       desc: 'Liquid velvet magnetic cat-eye and high-voltage mirror chrome.',
-      image: '/assets/products/normal/JHB014.jpg',
+      image: getAssetUrl('/assets/products/normal/JHB014.jpg'),
       badge: 'Liquid Metal',
       badgeColor: 'bg-cyan-600/30 text-cyan-200 border-cyan-500/40',
       action: () => onNavigateShop('Chrome')
@@ -55,7 +56,7 @@ export const CollectionsHubPage: React.FC<CollectionsHubPageProps> = ({ onNaviga
       slug: 'minimal',
       subtitle: 'Understated Nude Aesthetics',
       desc: 'Soft blush ombres, glazed donut finishes, and micro French tips.',
-      image: '/assets/products/normal/JHB006.jpg',
+      image: getAssetUrl('/assets/products/normal/JHB006.jpg'),
       badge: 'Clean Girl',
       badgeColor: 'bg-white/10 text-gray-200 border-white/20',
       action: () => onNavigateShop('Minimal')
@@ -65,7 +66,7 @@ export const CollectionsHubPage: React.FC<CollectionsHubPageProps> = ({ onNaviga
       slug: 'party',
       subtitle: 'Midnight Shimmer & Gems',
       desc: 'High-sparkle shimmer, radiant gloss, and statement evening nail silhouettes.',
-      image: '/assets/products/premium/10.jpg',
+      image: getAssetUrl('/assets/products/premium/10.jpg'),
       badge: 'After Dark',
       badgeColor: 'bg-purple-600/30 text-purple-200 border-purple-500/40',
       action: () => onNavigateShop('Party')

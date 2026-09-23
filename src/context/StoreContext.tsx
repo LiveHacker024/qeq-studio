@@ -13,6 +13,7 @@ import {
 } from '../types';
 import { INITIAL_PRODUCTS } from '../data/initialProducts';
 import { INITIAL_STORE_CONFIG, BUSINESS_INFO } from '../data/initialConfig';
+import { getAssetUrl } from '../utils/assetUrl';
 
 interface ToastMessage {
   id: string;
@@ -117,9 +118,15 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const pack_count = p.pack_count || (p.quality_tier === 'premium' ? 1 : 3);
       const nails_per_pack = p.nails_per_pack || (p.quality_tier === 'premium' ? 10 : 24);
       const total_nails = pack_count * nails_per_pack;
+      const normalizedThumbnail = getAssetUrl(p.thumbnail);
+      const normalizedImages = Array.isArray(p.images) && p.images.length > 0
+        ? p.images.map(img => getAssetUrl(img))
+        : [normalizedThumbnail];
 
       return {
         ...p,
+        thumbnail: normalizedThumbnail,
+        images: normalizedImages,
         price: activePrice,
         compare_price: comparePrice,
         pack_count,
@@ -204,6 +211,10 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const activePrice = product.quality_tier === 'premium' ? storeConfig.premiumPrice : storeConfig.normalPrice;
     const itemToAdd: Product = { 
       ...product, 
+      thumbnail: getAssetUrl(product.thumbnail),
+      images: Array.isArray(product.images) && product.images.length > 0
+        ? product.images.map(img => getAssetUrl(img))
+        : [getAssetUrl(product.thumbnail)],
       price: activePrice,
       pack_count: product.quality_tier === 'premium' ? 1 : 3,
       nails_per_pack: product.quality_tier === 'premium' ? 10 : 24,

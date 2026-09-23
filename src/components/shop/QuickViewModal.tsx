@@ -11,6 +11,7 @@ import {
   Plus,
   Minus
 } from 'lucide-react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 interface QuickViewModalProps {
   onNavigateToProduct: (slug: string) => void;
@@ -80,7 +81,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
         <div className="md:w-1/2 relative bg-[#07070A] flex items-center justify-center p-6 border-b md:border-b-0 md:border-r border-white/10">
           <div className="relative aspect-[4/5] w-full max-w-sm rounded-2xl overflow-hidden border border-white/10 shadow-xl">
             <img
-              src={quickViewProduct.thumbnail}
+              src={getAssetUrl(quickViewProduct.thumbnail)}
               alt={quickViewProduct.name}
               className="w-full h-full object-cover"
             />
@@ -224,20 +225,21 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
             <div className="flex items-center gap-3">
               <button
                 onClick={handleAddToCart}
-                className="flex-1 btn-luxury-primary text-xs uppercase tracking-widest py-3.5 flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30"
+                className="flex-1 btn-luxury-primary text-xs uppercase tracking-widest py-3.5 flex items-center justify-center gap-2 shadow-lg font-bold"
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span>Add To Bag (₹{quickViewProduct.price * quantity})</span>
+                <span>Add to Cart (₹{quickViewProduct.price * quantity})</span>
               </button>
 
               <button
                 onClick={() => toggleWishlist(quickViewProduct.id)}
-                className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all ${
+                className={`w-12 h-12 rounded-2xl border flex items-center justify-center transition-all ${
                   isFavorited
                     ? 'bg-rose-600 border-rose-500 text-white shadow-lg shadow-rose-600/30'
                     : 'bg-white/5 border-white/15 text-gray-300 hover:text-white hover:bg-white/10'
                 }`}
                 title="Save to Wishlist"
+                aria-label="Wishlist"
               >
                 <Heart className={`w-5 h-5 ${isFavorited ? 'fill-current' : ''}`} />
               </button>
@@ -245,9 +247,9 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
 
             <button
               onClick={handleBuyNow}
-              className="w-full btn-luxury-secondary text-xs uppercase tracking-widest py-3 flex items-center justify-center gap-2 border-champagne-gold/30 hover:border-champagne-gold/60 text-champagne-soft"
+              className="w-full py-3 rounded-2xl bg-[#C8A96B] hover:bg-[#E2C98A] text-black text-xs font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-md"
             >
-              <span>Instant Buy Now</span>
+              <span>Buy Now — Direct Checkout</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
 

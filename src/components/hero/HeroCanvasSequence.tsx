@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 interface HeroCanvasSequenceProps {
   totalFrames?: number;
@@ -23,7 +24,7 @@ export const HeroCanvasSequence: React.FC<HeroCanvasSequenceProps> = ({
   // Format frame index: 1 -> "001", 12 -> "012", 120 -> "120"
   const getFrameUrl = useCallback((index: number) => {
     const num = (index + 1).toString().padStart(3, '0');
-    return `/assets/hero-frames/ezgif-frame-${num}.jpg`;
+    return getAssetUrl(`/assets/hero-frames/ezgif-frame-${num}.jpg`);
   }, []);
 
   // Preload frames progressively
@@ -208,7 +209,7 @@ export const HeroCanvasSequence: React.FC<HeroCanvasSequenceProps> = ({
       {/* Poster Fallback during initial boot */}
       {!isReady && (
         <img
-          src="/assets/hero-frames/ezgif-frame-001.jpg"
+          src={getAssetUrl('/assets/hero-frames/ezgif-frame-001.jpg')}
           alt="QeQ Studio Hero Presentation"
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
         />
